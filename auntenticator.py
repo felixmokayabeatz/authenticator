@@ -1,69 +1,90 @@
-import tkinter as tk
-from tkinter import messagebox
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.clock import Clock
 import pyotp
 import time
 
-class AuthenticatorApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Mini Authenticator")
+class AuthenticatorWidget(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.orientation = 'vertical'
+        self.padding = 20
+        self.spacing = 15
 
-        self.secret_var = tk.StringVar()
-        self.otp_var = tk.StringVar(value="Enter secret and press Generate")
-        self.timer_var = tk.StringVar(value="")
+        self.secret_input = TextInput(
+            hint_text="Enter your TOTP secret (Base32)",
+            multiline=False,
+            font_size=18,
+            size_hint=(1, None),
+            height=40
+        )
+        self.add_widget(self.secret_input)
 
-        tk.Label(root, text="Enter your TOTP secret (Base32):").pack(pady=5)
-        tk.Entry(root, textvariable=self.secret_var, width=40).pack(pady=5)
+        self.generate_button = Button(
+            text="Generate OTP",
+            size_hint=(1, None),
+            height=50,
+            background_color=(0.2, 0.6, 0.86, 1),
+            font_size=20
+        )
+        self.generate_button.bind(on_press=self.start)
+        self.add_widget(self.generate_button)
 
-        tk.Button(root, text="Generate OTP", command=self.start).pack(pady=10)
+        self.otp_label = Label(
+            text="OTP will appear here",
+            font_size=48,
+            size_hint=(1, None),
+            height=100,
+            bold=True
+        )
+        self.add_widget(self.otp_label)
 
-        tk.Label(root, text="Current OTP:", font=("Helvetica", 14)).pack(pady=(20,5))
-        tk.Label(root, textvariable=self.otp_var, font=("Helvetica", 24, "bold")).pack()
-
-        tk.Label(root, textvariable=self.timer_var, font=("Helvetica", 12)).pack(pady=10)
+        self.timer_label = Label(
+            text="",
+            font_size=24,
+            size_hint=(1, None),
+            height=40
+        )
+        self.add_widget(self.timer_label)
 
         self.totp = None
-        self.countdown_seconds = 30
-        self.running = False
+        self.countdown = 30
+        self.event = None
 
-    def start(self):
-        secret = self.secret_var.get().strip()
+    def start(self, instance):
+        secret = self.secret_input.text.strip()
         if not secret:
-            messagebox.showerror("Error", "Please enter a secret!")
+            self.otp_label.text = "[color=ff0000]Please enter a secret![/color]"
             return
         try:
             self.totp = pyotp.TOTP(secret)
-            # Test generate to validate secret, throws exception if invalid
-            self.totp.now()
-        except Exception as e:
-            messagebox.showerror("Error", "Invalid secret!")
+            
+            _ = self.totp.now()
+        except Exception:
+            self.otp_label.text = "[color=ff0000]Invalid secret![/color]"
             return
 
-        if not self.running:
-            self.running = True
-            self.update_otp()
+        self.update_otp(0)
+        if self.event:
+            self.event.cancel()
+        self.event = Clock.schedule_interval(self.update_otp, 1)
 
-    def update_otp(self):
-        if not self.running:
+    def update_otp(self, dt):
+        if not self.totp:
             return
-
         current_otp = self.totp.now()
-        self.otp_var.set(current_otp)
+        self.otp_label.text = current_otp
 
-        # Countdown timer starts at 30 and goes down
-        self.countdown_seconds = 30
-        self.update_timer()
+        
+        time_left = 30 - (int(time.time()) % 30)
+        self.timer_label.text = f"Next code in: {time_left:02d}s"
 
-    def update_timer(self):
-        if self.countdown_seconds >= 0:
-            mins, secs = divmod(self.countdown_seconds, 60)
-            self.timer_var.set(f"Next code in: {mins:02d}:{secs:02d}")
-            self.countdown_seconds -= 1
-            self.root.after(1000, self.update_timer)
-        else:
-            self.update_otp()
+class AuthenticatorApp(App):
+    def build(self):
+        return AuthenticatorWidget()
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = AuthenticatorApp(root)
-    root.mainloop()
+if __name__ == '__main__':
+    AuthenticatorApp().run()
