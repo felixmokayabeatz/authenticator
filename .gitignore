@@ -1,2 +1,7 @@
 otp/
 secrets.json
+*.json
+*.
+*.spec
+build/
+dist/
