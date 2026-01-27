@@ -43,9 +43,3 @@ Then follow the UI prompts to add a TOTP secret and generate corresponding codes
 ## How It Works
 
 TOTP generates time-based codes that expire every 30 seconds, providing an extra layer of security for your accounts. Simply scan a QR code or manually enter your secret key, and the app will generate valid authentication codes.
-
-## License
-
-This project is a fork of [felixmokayabeatz/authenticator](https://github.com/felixmokayabeatz/authenticator).
-
----
