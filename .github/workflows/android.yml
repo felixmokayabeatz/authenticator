@@ -10,10 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Install system dependencies
+    - name: Install dependencies
       run: |
         sudo apt update
         sudo apt install -y \
@@ -45,18 +44,14 @@ jobs:
         sed -i 's/^requirements =.*/requirements = python3,kivy,pyotp/' buildozer.spec
         sed -i 's|^source.include_exts =.*|source.include_exts = py,png,jpg,kv,json|' buildozer.spec
 
-    - name: Prepare Android SDK (trigger download)
+    - name: Auto accept Android licenses
       run: |
-        buildozer android clean || true
-
-    - name: Install Android SDK components
-      run: |
-        SDKMANAGER=~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager
-        yes | $SDKMANAGER --licenses || true
-        $SDKMANAGER "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+        mkdir -p ~/.android
+        touch ~/.android/repositories.cfg
 
     - name: Build APK
-      run: buildozer -v android debug
+      run: |
+        yes | buildozer -v android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
