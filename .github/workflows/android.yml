@@ -58,6 +58,14 @@ jobs:
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
 
+      - name: Ensure buildozer.spec exists (init if missing)
+        shell: bash
+        run: |
+          if [ ! -f buildozer.spec ]; then
+            buildozer init
+          fi
+          ls -la buildozer.spec
+
       - name: Build APK
         run: |
           yes | buildozer -v android debug
