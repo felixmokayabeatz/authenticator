@@ -11,7 +11,7 @@ A simple TOTP (Time-based One-Time Password) authenticator app built with Python
 
 ## Requirements
 
-* Python 3.x
+* Python 3.11
 * Kivy (Python UI framework)
 
 ## Installation
@@ -28,7 +28,7 @@ cd authenticator
 
 3. Install dependencies:
 ```bash
-pip install kivy
+pip install kivy pyotp
 ```
 
 ## Usage
