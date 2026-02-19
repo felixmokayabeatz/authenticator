@@ -16,11 +16,22 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y python3-pip zip unzip openjdk-17-jdk
+        sudo apt install -y \
+          python3-pip \
+          zip \
+          unzip \
+          openjdk-17-jdk \
+          autoconf \
+          libtool \
+          pkg-config \
+          zlib1g-dev \
+          libncurses5-dev \
+          libffi-dev \
+          libssl-dev
 
-    - name: Install Buildozer
+    - name: Install Buildozer and dependencies
       run: |
-        pip install --user buildozer
+        pip install --user buildozer cython
         echo "$HOME/.local/bin" >> $GITHUB_PATH
 
     - name: Initialize buildozer
@@ -29,10 +40,11 @@ jobs:
 
     - name: Configure buildozer
       run: |
-        sed -i 's/^requirements =.*/requirements = python3,kivy,pyotp/' buildozer.spec
         sed -i 's/^title =.*/title = Authenticator/' buildozer.spec
-        sed -i 's/^package.name =.*/package.name = authenticator/' buildozer.spec
-        sed -i 's/^package.domain =.*/package.domain = org.moses/' buildozer.spec
+        sed -i 's/^package.name =.*/package.name = totp_authenticator/' buildozer.spec
+        sed -i 's/^package.domain =.*/package.domain = org.mosesamwoma/' buildozer.spec
+        sed -i 's/^requirements =.*/requirements = python3,kivy,pyotp/' buildozer.spec
+        sed -i 's|^source.include_exts =.*|source.include_exts = py,png,jpg,kv,json|' buildozer.spec
 
     - name: Build APK
       run: |
