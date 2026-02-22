@@ -1,13 +1,10 @@
 # 🔐 Authenticator
-
 A simple **TOTP (Time-based One-Time Password)** authenticator app built with **Python** and **Kivy** for generating secure 2-factor authentication (2FA) codes locally on your computer.
-
 This application allows you to generate login verification codes (for services like GitHub, Google, and others) without relying on a mobile device.
 
 ---
 
 ## ✨ Features
-
 - 🔐 Generate TOTP codes for 2FA-enabled accounts
 - 🗃️ Store secrets locally on the device
 - ⚡ Automatic OTP refresh every 30 seconds
@@ -18,13 +15,11 @@ This application allows you to generate login verification codes (for services l
 ---
 
 ## 📸 Screenshot
-
 ![Authenticator Screenshot](screenshort/one.png)
 
 ---
 
 ## 📦 Requirements
-
 - Python 3.11 (recommended for Kivy compatibility)
 - pip (Python package manager)
 
@@ -35,19 +30,16 @@ This application allows you to generate login verification codes (for services l
 ## 🚀 Installation
 
 **1. Clone the repository**
-
 ```bash
 git clone https://github.com/mosesamwoma/authenticator.git
 ```
 
 **2. Navigate into the project directory**
-
 ```bash
 cd authenticator
 ```
 
 **3. Install dependencies**
-
 ```bash
 pip install -r requirements.txt
 ```
@@ -57,13 +49,11 @@ pip install -r requirements.txt
 ## ▶️ Usage
 
 Run the application:
-
 ```bash
 python auntenticator.py
 ```
 
 ### Steps
-
 1. Enter a service name (e.g., GitHub, Google)
 2. Paste your TOTP secret key (Base32 format)
 3. Click **Generate OTP**
@@ -71,15 +61,23 @@ python auntenticator.py
 
 ---
 
+## 💻 Desktop App (Windows)
+
+Prefer not to set up Python? Download the ready-to-run Windows executable directly:
+
+**[⬇️ Download Authenticator.exe](https://github.com/mosesamwoma/authenticator/releases/download/untagged-17b79d5d300c9a85a32b/Authenticator.exe)**
+
+Just download and run — no Python installation required!
+
+---
+
 ## ⚙️ How It Works
 
 TOTP (Time-based One-Time Password) generates temporary authentication codes using:
-
 - A shared secret key
 - The current system time
 
 Each code:
-
 - Expires every 30 seconds
 - Can only be used once
 - Adds an extra layer of account security
@@ -97,7 +95,6 @@ Secrets are stored locally in a JSON file on your device. They are not uploaded 
 ---
 
 ## 🛠️ Built With
-
 - [Python](https://www.python.org/)
 - [Kivy](https://kivy.org/)
 - [PyOTP](https://pyauth.github.io/pyotp/)
