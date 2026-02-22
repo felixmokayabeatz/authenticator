@@ -15,7 +15,7 @@ This application allows you to generate login verification codes (for services l
 ---
 
 ## 📸 Screenshot
-![Authenticator Screenshot](screenshort/one.png)
+![Authenticator Screenshot](screenshort/picture.png)
 
 ---
 
