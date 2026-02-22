@@ -1,139 +1,134 @@
-# 🔐 Authenticator
-A simple TOTP (Time-based One-Time Password) authenticator app built with Python and Kivy for generating secure 2-factor authentication (2FA) codes locally on your computer.
-This application allows you to generate login verification codes (for services like GitHub, Google, and others) without relying on a mobile device.
+# AUTHENTICATOR
+
+> Generate secure 2FA codes — locally, instantly, privately.
+
+A lightweight TOTP (Time-based One-Time Password) authenticator built with Python and Kivy. No phone needed. No cloud. Just you and your codes.
 
 ---
 
-**✨ Features**
-- 🔐 Generate TOTP codes for 2FA-enabled accounts
-- 🗃️ Store secrets locally on the device
-- ⚡ Automatic OTP refresh every 30 seconds
-- 🖥️ Cross-platform desktop application
-- 🐍 Built using Python and Kivy
-- 💾 Remembers previously added services
+## What It Does
+
+Authenticator generates login verification codes for any 2FA-enabled service — GitHub, Google, and beyond — directly on your desktop. Fast, offline, and fully under your control.
 
 ---
 
-**📸 Screenshot**
+## Features
+
+- **TOTP Code Generation** — Industry-standard 2FA codes on demand
+- **Local Secret Storage** — Your keys never leave your machine
+- **Auto-Refresh** — Codes rotate every 30 seconds automatically
+- **Cross-Platform** — Runs on any desktop via Python + Kivy
+- **Persistent Memory** — Remembers every service you add
+
+---
+
+## Screenshot
 
 ![Authenticator Screenshot](screenshort/picture.png)
 
 ---
 
-**📦 Requirements**
-- Python 3.11 (recommended for Kivy compatibility)
-- pip (Python package manager)
+## Requirements
 
-> ⚠️ Newer Python versions (3.13/3.14) may not yet fully support Kivy.
+- Python 3.11 *(recommended — newer versions may have Kivy compatibility issues)*
+- pip
 
 ---
 
-**🚀 Installation**
+## Getting Started
 
-1. Clone the repository
 ```bash
+# 1. Clone the repo
 git clone https://github.com/mosesamwoma/authenticator.git
-```
 
-2. Navigate into the project directory
-```bash
+# 2. Enter the directory
 cd authenticator
-```
 
-3. Install dependencies
-```bash
+# 3. Install dependencies
 pip install -r requirements.txt
-```
 
----
-
-**▶️ Usage**
-
-Run the application:
-```bash
+# 4. Launch
 python auntenticator.py
 ```
 
-**Steps**
-1. Enter a service name (e.g., GitHub, Google)
-2. Paste your TOTP secret key (Base32 format)
-3. Click Generate OTP
-4. A new authentication code will appear and refresh every 30 seconds
+---
+
+## How to Use
+
+1. Enter a **service name** (e.g. GitHub, Google)
+2. Paste your **TOTP secret key** (Base32 format)
+3. Hit **Generate OTP**
+4. Your code appears — and refreshes every 30 seconds
 
 ---
 
-**💻 Desktop App (Windows)**
+## Windows Executable
 
-Prefer not to set up Python? Download the ready-to-run Windows executable directly:
+Don't want to deal with Python? Just grab the `.exe`:
 
-[⬇️ Download Authenticator.exe](https://github.com/mosesamwoma/authenticator/releases/download/untagged-17b79d5d300c9a85a32b/Authenticator.exe)
+**[⬇ Download Authenticator.exe](https://github.com/mosesamwoma/authenticator/releases/download/untagged-17b79d5d300c9a85a32b/Authenticator.exe)**
 
-Just download and run — no Python installation required!
-
----
-
-**⚙️ How It Works**
-
-TOTP (Time-based One-Time Password) generates temporary authentication codes using:
-- A shared secret key
-- The current system time
-
-Each code:
-- Expires every 30 seconds
-- Can only be used once
-- Adds an extra layer of account security
-
-The app uses the `pyotp` library to implement the TOTP standard (RFC 6238).
+Download. Double-click. Done.
 
 ---
 
-**🔒 Security Note**
+## How It Works
 
-Secrets are stored locally in a JSON file on your device. They are not uploaded or shared externally.
+TOTP codes are generated using two inputs: a shared secret key + the current time. Each code:
 
-> Future improvements may include encryption for enhanced protection.
+- Expires after **30 seconds**
+- Is valid for **one use only**
+- Adds a real layer of account security
+
+Built on `pyotp`, implementing the TOTP standard (RFC 6238).
 
 ---
 
-**🛠️ Built With**
+## Security
+
+Secrets are stored in a local JSON file on your device — never uploaded, never shared.
+
+> Encryption for stored secrets is planned for a future release.
+
+---
+
+## Roadmap
+
+| # | Feature | Status |
+|---|---------|--------|
+| 1 | Encrypt stored secrets | Planned |
+| 2 | App lock / PIN | Planned |
+| 3 | Multi-account dashboard | Planned |
+| 4 | One-click OTP copy | Planned |
+| 5 | QR code scanning | Planned |
+| 6 | Edit / delete accounts | Planned |
+| 7 | Countdown progress bar | Planned |
+| 8 | Dark mode UI | Planned |
+| 9 | Service icons | Planned |
+| 10 | Windows installer (.exe setup) | Planned |
+| 11 | Auto-update system | Planned |
+| 12 | Backup & restore accounts | Planned |
+| 13 | Master password unlock | Planned |
+| 14 | Chrome extension | Planned |
+| 15 | Mobile app (Android / iOS) | Planned |
+| 16 | GitHub Actions CI/CD | Planned |
+
+---
+
+## Built With
+
 - [Python](https://www.python.org/)
 - [Kivy](https://kivy.org/)
 - [PyOTP](https://pyauth.github.io/pyotp/)
 
 ---
 
-**🔮 Future Improvements**
+## Contributing
 
-Here's what's planned for upcoming versions of the Authenticator app:
-
-| # | Improvement | Description |
-|---|-------------|-------------|
-| 1 | 🔑 **Encrypt stored secrets** | Secure local secrets with encryption instead of plain JSON |
-| 2 | 🔒 **App lock / PIN** | Require a PIN or password to open the app |
-| 3 | 📊 **Multi-account dashboard** | View and manage all accounts from a single screen |
-| 4 | 📋 **Copy OTP button** | One-click copy of the generated code to clipboard |
-| 5 | 📷 **QR code scanning** | Scan QR codes to automatically import account secrets |
-| 6 | ✏️ **Edit/Delete accounts** | Modify or remove saved accounts easily |
-| 7 | ⏳ **Countdown progress bar** | Visual timer showing time remaining before OTP expires |
-| 8 | 🌙 **Dark mode UI** | Toggle between light and dark themes |
-| 9 | 🖼️ **Service icons/logos** | Display recognisable icons for each added service |
-| 10 | 📦 **Create installer (.exe setup)** | A proper Windows installer for easier distribution |
-| 11 | 🔄 **Auto-update system** | Automatically check for and apply app updates |
-| 12 | 💾 **Backup & restore accounts** | Export and import accounts for safekeeping |
-| 13 | 🔐 **Master password unlock** | Protect all accounts behind a single master password |
-| 14 | 🌐 **Chrome extension version** | Access OTP codes directly from the browser |
-| 15 | 📱 **Mobile phone app (Android/iOS)** | A native mobile version of the authenticator |
-| 16 | ⚙️ **Auto-build releases (GitHub Actions)** | Automate builds and releases using CI/CD pipelines |
+Pull requests are welcome. Fork the repo, make your changes, and submit a PR. Suggestions and issues are always open.
 
 ---
 
-**🙌 Contributions**
+## Support
 
-Contributions, suggestions, and improvements are welcome!
-Feel free to fork the repository and submit a pull request.
-
----
-
-**⭐ Support**
-
-If you find this project useful, consider giving it a ⭐ on GitHub!
+If this project helped you, a ⭐ on GitHub goes a long way.
