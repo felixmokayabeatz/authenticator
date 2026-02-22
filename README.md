@@ -49,7 +49,7 @@ cd authenticator
 **3. Install dependencies**
 
 ```bash
-pip install kivy pyotp
+pip install -r requirements.txt
 ```
 
 ---
