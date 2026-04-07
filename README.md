@@ -18,7 +18,6 @@ Authenticator generates login verification codes for any 2FA-enabled service —
 - **Local Secret Storage** — Your keys never leave your machine
 - **Auto-Refresh** — Codes rotate every 30 seconds automatically
 - **Cross-Platform** — Runs on any desktop via Python + Kivy
-- **Persistent Memory** — Remembers every service you add
 
 ---
 
@@ -89,29 +88,6 @@ Built on `pyotp`, implementing the TOTP standard (RFC 6238).
 Secrets are stored in a local JSON file on your device — never uploaded, never shared.
 
 > Encryption for stored secrets is planned for a future release.
-
----
-
-## Roadmap
-
-| # | Feature | Status |
-|---|---------|--------|
-| 1 | Encrypt stored secrets | Planned |
-| 2 | App lock / PIN | Planned |
-| 3 | Multi-account dashboard | Planned |
-| 4 | One-click OTP copy | Planned |
-| 5 | QR code scanning | Planned |
-| 6 | Edit / delete accounts | Planned |
-| 7 | Countdown progress bar | Planned |
-| 8 | Dark mode UI | Planned |
-| 9 | Service icons | Planned |
-| 10 | Windows installer (.exe setup) | Planned |
-| 11 | Auto-update system | Planned |
-| 12 | Backup & restore accounts | Planned |
-| 13 | Master password unlock | Planned |
-| 14 | Chrome extension | Planned |
-| 15 | Mobile app (Android / iOS) | Planned |
-| 16 | GitHub Actions CI/CD | Planned |
 
 ---
 
