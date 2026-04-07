@@ -4,10 +4,12 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.clock import Clock
+from kivy.core.clipboard import Clipboard
 import pyotp
 import time
 import os
 import json
+
 
 class AuthenticatorWidget(BoxLayout):
     secrets_file = "secrets.json"
@@ -55,6 +57,16 @@ class AuthenticatorWidget(BoxLayout):
         )
         self.add_widget(self.otp_label)
 
+        self.copy_button = Button(
+            text="Copy OTP",
+            size_hint=(1, None),
+            height=50,
+            background_color=(0.3, 0.8, 0.4, 1),
+            font_size=18
+        )
+        self.copy_button.bind(on_press=self.copy_otp)
+        self.add_widget(self.copy_button)
+
         self.timer_label = Label(
             text="",
             font_size=24,
@@ -86,7 +98,6 @@ class AuthenticatorWidget(BoxLayout):
     def load_last_secret(self):
         secrets = self.load_secrets()
         if secrets:
-            # Load the last saved secret and service
             last = secrets[-1]
             self.service_input.text = last.get("service", "")
             self.secret_input.text = last.get("secret", "")
@@ -101,6 +112,7 @@ class AuthenticatorWidget(BoxLayout):
         if not secret:
             self.otp_label.text = "[color=ff0000]Please enter a secret![/color]"
             return
+
         try:
             self.totp = pyotp.TOTP(secret)
             _ = self.totp.now()
@@ -108,24 +120,19 @@ class AuthenticatorWidget(BoxLayout):
             self.otp_label.text = "[color=ff0000]Invalid secret![/color]"
             return
 
-        # Load current secrets list
         secrets = self.load_secrets()
 
-        # Check if service exists, update secret if yes
         for entry in secrets:
             if entry["service"].lower() == service.lower():
                 entry["secret"] = secret
                 break
         else:
-            # Add new entry
             secrets.append({"service": service, "secret": secret})
-            
-        # Before saving, check if this secret already exists for another service
+
         for entry in secrets:
             if entry["secret"] == secret and entry["service"].lower() != service.lower():
                 self.otp_label.text = "[color=ff0000]Secret already used by another service![/color]"
                 return
-
 
         self.save_secrets(secrets)
 
@@ -142,6 +149,14 @@ class AuthenticatorWidget(BoxLayout):
 
         time_left = 30 - (int(time.time()) % 30)
         self.timer_label.text = f"Next code in: {time_left:02d}s"
+
+    def copy_otp(self, instance):
+        otp = self.otp_label.text.strip()
+        if otp and otp.isdigit():
+            Clipboard.copy(otp)
+            self.timer_label.text = "OTP copied to clipboard"
+        else:
+            self.timer_label.text = "No valid OTP to copy"
 
 
 class AuthenticatorApp(App):
